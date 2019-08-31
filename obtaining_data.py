@@ -13,7 +13,7 @@ bucket_name = 'complaintsoutput'
 bucket = s3.Bucket(bucket_name)
 for obj in bucket.objects.all():
     filename = obj.key.rsplit('/')[-1]
-    #if filename=='output.tar.gz':
-    s3client.download_file(bucket_name, obj.key, "C:\\Users\\HP\\Desktop" + filename)
+    if filename=='output.tar.gz':
+        s3client.download_file(bucket_name, obj.key, "C:\\Users\\HP\\Documents\\random stuff sem III\\DBS pshift\\" + filename)
 # 
 # =============================================================================
