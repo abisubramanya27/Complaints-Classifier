@@ -3,9 +3,11 @@ import nltk.tokenize as nt
 import numpy as np
 import pandas as pd
 import math
+import nltk
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 from sklearn.metrics.pairwise import cosine_similarity
+nltk.download('stopwords')
 
 def tf(word,wordl):
     return wordl.count(word) / len(wordl)
