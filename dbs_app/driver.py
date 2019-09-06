@@ -93,7 +93,7 @@ os.remove(path+file_name)
 os.remove(path+'predictions.jsonl')
 
 #Outputs the summary of complaint
-f.write("\nSUMMARY OF COMPLAINT : ")
+f.write("\n\nSUMMARY OF COMPLAINT : ")
 f.write(summarized_complaint)
 
 #The phone number from which the complaint was registered, which can be tapped
@@ -101,14 +101,30 @@ f.write(summarized_complaint)
 phone_number = "9876543211"
 
 #Outputs the Phone number and Associated Account numbers
-f.write("\nContact Number of Complaint :",phone_number)
-f.write(phno_to_accno.accphmatch(phone_number))
+f.write("\n\nContact Number of Complaint :"+phone_number)
+f.write("\n"+phno_to_accno.accphmatch(phone_number))
 
 #Outputs the original complaint
-f.write("\nORIGINAL COMPLAINT : ")
+f.write("\n\nORIGINAL COMPLAINT : ")
 f.write(input_complaint)
 
 f.close()
+
+#Clear the S3 Bucket for future use
+import boto3
+
+s3 = boto3.resource('s3')
+bucket = s3.Bucket('audio-complaint')
+bucket.objects.all().delete()
+
+bucket = s3.Bucket('complaints-input')
+bucket.objects.all().delete()
+
+bucket = s3.Bucket('complaintsoutput')
+bucket.objects.all().delete()
+
+bucket = s3.Bucket('spamoutput')
+bucket.objects.all().delete()
 
 print("\n\nCheck Outputs.txt File")
 
