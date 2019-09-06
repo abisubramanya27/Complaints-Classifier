@@ -13,7 +13,7 @@ create_response = client.create_document_classifier(
         'S3Uri': 's3://bankcomplaints/complaint_train.csv'
     },
     DataAccessRoleArn='arn:aws:iam::729128127076:role/pshift',
-    DocumentClassifierName='Complaintsclassifierv1',
+    DocumentClassifierName='Complaintclassifierv1',
     LanguageCode='en'
 )
 print("Create response: %s\n", create_response)
