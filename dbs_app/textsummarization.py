@@ -12,7 +12,7 @@ from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 from sklearn.metrics.pairwise import cosine_similarity
 nltk.download('stopwords')
-
+nltk.download('wordnet')
 #Functions to calculate tf-idf values to generate vectors for words
 def tf(word,wordl):
     return wordl.count(word) / len(wordl)
