@@ -11,12 +11,12 @@ def tarfile_open(name) :
 	tar.list();
 	tar.extractall()
 
-	label = ""
+	label_list = []
 	with open('predictions.jsonl') as f:
 		for line in f:
 	            data = json.loads(line)
-	            label = data['Classes'][0]['Name']
+	            label_list = data['Classes']
 	print('\n')
-	return label
+	return label_list
 
 # =============================================================================
