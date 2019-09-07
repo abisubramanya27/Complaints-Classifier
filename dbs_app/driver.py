@@ -17,7 +17,7 @@ import json
 import os
 
 bucket_name = "audio-complaint"
-file_name = "test-audio.mp3"
+file_name = "test-audio.mp3"      #The name of audio complaint file you wish to process
 path = './'
 
 #Uploads local audio file to S3 Bucket 
