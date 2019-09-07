@@ -15,20 +15,48 @@ import phno_to_accno
 #Importing Python Libraries
 import json
 import os
+import boto3
+import time
+
+#The s3 object is to be used for clearing the S3 buckets (for future use)
+s3 = boto3.resource('s3')
+
+#Number of Test Data
+NoT = 1
+#Audio Files should be of the form "test-audio-<number>.mp3"
+
+#Speech to Text - Transcribe Part
+
+def speech_part(bucket_name,file_name,path) : 
+
+    #Uploads local audio file to S3 Bucket 
+	upload_s3.upload(path,bucket_name,file_name)
+	time.sleep(20)
+
+	#Utilises Speech to Text from AWS Transcribe  on the S3 audio file and stores the output JSON in S3 Bucket
+	file_name = s2t.s2t(bucket_name+'/'+file_name)
+	file_name += '.json'
+
+	#Downloads the output JSON of Speech to Text from S3 and stores in Local Storage
+	s3_filedownload.download_file(bucket_name,file_name)
+	time.sleep(20)
+
+	#Clears "audio-complaint" S3 Bucket
+	bucket = s3.Bucket('audio-complaint')
+	bucket.objects.all().delete()
+	time.sleep(20)
 
 bucket_name = "audio-complaint"
-file_name = "test-audio.mp3"      #The name of audio complaint file you wish to process
+file_name = "test-audio"        #The name of audio complaint file you wish to process
 path = './'
 
-#Uploads local audio file to S3 Bucket 
-upload_s3.upload(path,bucket_name,file_name)
+for i in range(NoT) :
+	speech_part(bucket_name,file_name+"-"+str(i+1)+".mp3")
 
-#Utilises Speech to Text from AWS Transcribe  on the S3 audio file and stores the output JSON in S3 Bucket
-file_name = s2t.s2t(bucket_name+'/'+file_name)
-file_name += '.json'
 
-#Downloads the output JSON of Speech to Text from S3 and stores in Local Storage
-s3_filedownload.download_file(bucket_name,file_name)
+#----------------------------------------------------------------------------------------------------------
+
+#Summarization, Cleaning and Classifier Input Generation Part
 
 #Gets the Text obtained from the audio, from the JSON file
 input_complaint = ""
@@ -54,46 +82,99 @@ file_name = "test_complaint.csv"
 
 #Uploads the complaint (.csv) file to S3 Bucket
 upload_s3.upload(path,bucket_name,file_name)
+time.sleep(20)
+
+#----------------------------------------------------------------------------------------------------------
+
+#Complaint Classifier Part
 
 file_name = "output.tar.gz"
 bucket_name = "complaintsoutput"
 S3_extension = "complaints-input/test_complaint.csv"
 
 #Calls AWS comprehend to classify the complaint
-calling_comprehend.comprehend(S3_extension,"Complaintclassifierv1",bucket_name)
+calling_comprehend.comprehend(S3_extension,"ComplaintClassifierv2",bucket_name)
 
-f = open('./Outputs.txt','w')
+f = open('./Outputs2.txt','w')
 
+#Downloads the output JSON of Complaints Classifier
 s3_filedownload.download_file(bucket_name,file_name)
-complaint_type = tarfile_opener.tarfile_open(path+file_name)
+time.sleep(20)
 
-os.remove(path+file_name)
+complaint_labels = tarfile_opener.tarfile_open(path+file_name)
+
+#Deletes the output JSON and .tar files from Local Storage
 os.remove(path+'predictions.jsonl')
+os.remove(path+file_name)
+
+#Clears the "complaintsoutput" S3 Bucket
+bucket = s3.Bucket('complaintsoutput')
+bucket.objects.all().delete()
+time.sleep(20)
+
+#----------------------------------------------------------------------------------------------------------
+
+#Spam Classifier Part
 
 file_name = "output.tar.gz"
 bucket_name = "spamoutput"
 S3_extension = "complaints-input/test_complaint.csv"
 
 #Calls AWS comprehend to detect if the complaint is spam or not
-calling_comprehend.comprehend(S3_extension,"Spamclassifierv1",bucket_name)
+calling_comprehend.comprehend(S3_extension,"Spamclassifierv2",bucket_name)
 
 #Outputs if the complaint is spam or not
 f.write("SPAM (YES/NO) : ")
 
+#Downloads the output JSON of Spam Classifier
 s3_filedownload.download_file(bucket_name,file_name)
-if(tarfile_opener.tarfile_open(path+file_name).lower() == "spam") :
+time.sleep(20)
+
+#write Spam Classifier Output to the output file
+ans = tarfile_opener.tarfile_open(path+file_name)
+if(ans[0]['Name'].lower() == "spam") :
 	f.write("YES")
 else :
 	f.write("NO")
 
-#Outputs the type of complaint
-f.write("\nTYPE OF COMPLAINT : "+complaint_type)
+#Clears the "spamoutput" S3 Bucket
+bucket = s3.Bucket('spamoutput')
+bucket.objects.all().delete()
+time.sleep(30)
 
-os.remove(path+file_name)
+#Deletes the output JSON and .tar files from Local Storage
 os.remove(path+'predictions.jsonl')
+os.remove(path+file_name)
+
+#----------------------------------------------------------------------------------------------------------
+
+#Outputs the type of complaint
+complaint_type = complaint_labels[0]['Name']
+f.write("\n\nTYPE OF COMPLAINT/QUERY : "+complaint_type)
+f.write("\nOTHER ASSOCIATED COMPLAINT/QUERY TAGS : ")
+other_labels = ""
+count_labels = 0
+for label in complaint_labels :
+	if(label['Name'] == complaint_type) :
+		continue
+	if(label['Score'] > 0.01) :
+		if(count_labels >= 1) :
+			other_labels += ', '
+		other_labels += label['Name']
+		count_labels += 1
+	else :
+		break
+
+f.write(other_labels)
+
+#----------------------------------------------------------------------------------------------------------
+
+#Clears "complaints-input" S3 Bucket
+bucket = s3.Bucket('complaints-input')
+bucket.objects.all().delete()
 
 #Outputs the summary of complaint
-f.write("\n\nSUMMARY OF COMPLAINT : ")
+f.write("\n\nSUMMARY OF COMPLAINT/QUERY : ")
 f.write(summarized_complaint)
 
 #The phone number from which the complaint was registered, which can be tapped
@@ -101,30 +182,14 @@ f.write(summarized_complaint)
 phone_number = "9876543211"
 
 #Outputs the Phone number and Associated Account numbers
-f.write("\n\nContact Number of the Complainant :"+phone_number)
+f.write("\n\nContact Number of the Customer :"+phone_number)
 f.write("\n"+phno_to_accno.accphmatch(phone_number))
 
 #Outputs the original complaint
-f.write("\n\nORIGINAL COMPLAINT : ")
+f.write("\n\nORIGINAL COMPLAINT/QUERY : ")
 f.write(input_complaint)
 
 f.close()
-
-#Clear the S3 Bucket for future use
-import boto3
-
-s3 = boto3.resource('s3')
-bucket = s3.Bucket('audio-complaint')
-bucket.objects.all().delete()
-
-bucket = s3.Bucket('complaints-input')
-bucket.objects.all().delete()
-
-bucket = s3.Bucket('complaintsoutput')
-bucket.objects.all().delete()
-
-bucket = s3.Bucket('spamoutput')
-bucket.objects.all().delete()
 
 print("\n\nCheck Outputs.txt File")
 
