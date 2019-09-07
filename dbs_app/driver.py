@@ -101,7 +101,7 @@ f.write(summarized_complaint)
 phone_number = "9876543211"
 
 #Outputs the Phone number and Associated Account numbers
-f.write("\n\nContact Number of Complaint :"+phone_number)
+f.write("\n\nContact Number of the Complainant :"+phone_number)
 f.write("\n"+phno_to_accno.accphmatch(phone_number))
 
 #Outputs the original complaint
