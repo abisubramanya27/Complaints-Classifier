@@ -15,9 +15,9 @@ using the access key ID and the secret access key provided in the csv file **roo
 
 * **Running the program**
  
- 1. Run the python file **driver.py** for each audio file it takes approximately 10 minutes to finish running(includeing the time taken by the classifiers).
+ 1. Without changing/modifying any files run the python file **driver.py**. For each audio file it takes approximately 10 minutes to finish running(includeing the time taken by the classifiers to run).
  
- 2. First the given audio is converted into text file using amazon transcribe. A successful call to transcribe will print a json file. Importantly the json file contains the job id **AND CRAP**.
+ 2. First the given audio is converted into text file using amazon transcribe. A successful call to transcribe will print a json file. Importantly the json file contains the job id and other information regarding the job.
  
  3. This is followed by a series of "Not Ready Yet" messages every 30 seconds till the output is received from AWS. The output is taken from the S3 bucket and is downloaded locally and stored as string variable(s).
  
@@ -27,11 +27,11 @@ using the access key ID and the secret access key provided in the csv file **roo
  
  6. For both the classifier after they are called, a successful call to transcribe will print a json file(which will be printed in the terminal) and a series of "Not ready yet" messages follow until the output is obtained from AWS.
  
- 7. The output is written in a text file named **outputs.txt** created in the same directory as driver.py
+ 7. The output is written in a text file named **Outputs.txt** created in the same directory as driver.py
  
- 8. The program terminates with the message "Check outputs.txt".
+ 8. The program terminates with the message "Check Outputs.txt".
 
-* The output will be written as a text file "output.txt" in the same folder in the following format:
+* The output will be written as a text file "output.txt" in the same folder in the following format for each complaint in order:
   
   SPAM (YES/NO) :
   
