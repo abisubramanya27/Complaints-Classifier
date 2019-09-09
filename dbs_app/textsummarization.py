@@ -12,7 +12,7 @@ from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 from sklearn.metrics.pairwise import cosine_similarity
 nltk.download('stopwords')
-nltk.download('wordnet')
+
 #Functions to calculate tf-idf values to generate vectors for words
 def tf(word,wordl):
     return wordl.count(word) / len(wordl)
@@ -94,8 +94,14 @@ def summarize(txt) :
     textrank = sorted(textrank,key = lambda x: x[0],reverse = True)
 
     output_str = ""
+    
+    #Number of Sentences to be Selected for Display
+    if(len(place) > 5) :
+        NoS = int(len(place)/2)
+    else :
+        NoS = len(place)
 
-    for i in range(int(math.sqrt(len(place)))) :
+    for i in range(NoS) :
         output_str += sentl[place[textrank[i][1]]]
         output_str += " ";
 
