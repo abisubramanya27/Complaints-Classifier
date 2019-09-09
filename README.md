@@ -31,7 +31,7 @@ using the access key ID and the secret access key provided in the csv file **roo
  
  8. The program terminates with the message "Check Outputs.txt".
 
-* The output will be written as a text file "output.txt" in the same folder in the following format for each complaint in order:
+* The output will be written as a text file "Outputs.txt" in the same folder in the following format for each complaint in order:
   
   SPAM (YES/NO) :
   
