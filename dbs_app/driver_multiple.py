@@ -22,7 +22,7 @@ import time
 s3 = boto3.resource('s3')
 
 #Number of Test Data
-NoT = len(list(next(os.walk("./test-audio"))[2]))
+NoT = len(list(next(os.walk("./test-audio"))[2]))-1
 #Audio Files should be of the form "test-audio-<number>.mp3"
 
 #Speech to Text - Transcribe Part
@@ -48,13 +48,13 @@ def speech_part(bucket_name,filename,path) :
 
 	#Gets the Text obtained from the audio, from the JSON file
 	input_complaint = ""
-	with open(path+filename) as f:
+	with open("./"+filename) as f:
 	       for line in f:
 	           data=json.loads(line)
 	           input_complaint = data["results"]["transcripts"][0]["transcript"]
 
 	#Deletes the output JSON file downloaded from Local Storage
-	os.remove(path+filename)
+	os.remove("./"+filename)
 
 	return input_complaint
 
@@ -170,7 +170,7 @@ f = open('./Outputs.txt','w')
 
 for i in range(NoT) :
 	
-	f.write(str(i+1)+". ")
+	f.write("\n\n"+str(i+1)+". ")
 
 	#Outputs if the complaint is spam or not
 	f.write("SPAM (YES/NO) : ")
