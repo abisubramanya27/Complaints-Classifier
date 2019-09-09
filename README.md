@@ -2,7 +2,7 @@
 A complaints classifer for banks built using Python and Amazon Web Services(AWS)
 
 Instructions for use:
-* Run : `pip install -r requirements.txt` in Shell to Download all Necessary Packages for running the Application
+* Run : `pip install -r requirement.txt` in Shell to Download all Necessary Packages for running the Application
 * Install and Set Up [AWS CLI](https://aws.amazon.com/cli/)
 * Configure it with:
 `aws configure`
@@ -15,7 +15,7 @@ using the access key ID and the secret access key provided in the csv file **roo
 
 **DBS app folder contains the working code, the other files were used for training the comprehend models**
 
-* **Running the program**
+'* **Running the program**
  
  1. Without changing/modifying any files run the python file **driver.py**. For each audio file it takes approximately 10 minutes to finish running(includeing the time taken by the classifiers to run).
  
@@ -47,11 +47,32 @@ using the access key ID and the secret access key provided in the csv file **roo
 
  Matching Account No(s) : 
 
-**About the dataset**:
-We obtained the training data from here : https://www.kaggle.com/sebastienverpile/consumercomplaintsdata/version/1 . We cleaned the data and reduced the types of complaints to 12. We used just about 10% of this data to train the model and about 1% to test its performance.
+```
+OTHER ASSOCIATED COMPLAINT/QUERY TAGS is meant to display categories that are good enough in describing the complaint/query,
+but don't have the maximum score of closeness to the text. Their inclusion will reduce the possibility of any significant errors in prediction
+```
+Brief Descriptions of the files and folders in the GitHub : 
 
-The folder dataset contains the dataset used for training the spam and complaint classifiers(each stored separately).
-
-For sample test data we have enclosed four audio files and details of few customers.
-
-
+- Training_Dataset : Folder containing Dataset for training the machine learning custom classification models on AWS
+  - complaint_train.csv : Dataset for complaint classification model
+  - spam_train.csv : Dataset for spam classification model
+- complaintclassifier_train.py : Program to train the complaint classification model using the corresponding training Dataset in S3 Bucket "bankcomplaints"
+- spamclassifier_train.py : Program to train the spam classification model using the corresponding training Dataset in S3 Bucket "bankcomplaints"
+- rootkeysubmission.csv : Contains the access key ID and secret access key to access the machine learning models and S3 buckets we created
+- requirement.txt : Contains the necessary Python Packages and Modules one need to install before running the program
+- submission_sophohackers.pptx : Contains the slides used to make the video
+- README.md : (This File) Contains the information and instructions related to setting up the environment,understanding and runnning the spplication
+- dbs_app : Folder containing the working code and resources necessary to run the application
+  - Database : Folder to mimic a customer database in a bank for representative purposes
+    - Accno_Phno_db.csv : File contains Account Number and corresponding Phone Number Details
+  - test-audio : Folder contains the Test Audio Files to be run the application on (We have generated 10 test audio files to see how our application runs)
+  - calling_comprehend.py : Program which calls the Custom Classification Model we trained in Comprehend of AWS to do the label prediction
+  - clean_string.py : Program which cleans a given string of all punctuation marks, and non alphabetic characters
+  - driver.py : The Main Program which needs to run on the terminal. It integrates all other modules and process the test audio files to generate required output in "Outputs.txt" file
+  - multiple_tarfile_opener.py : Program which opens a .tar file and extracts the JSON Object from it
+  - phno_to_accno.py : Program to get the Account numbers a given Phone Number maps to
+  - s2t.py : Program which calls Speech To Text in Transcribe of AWS to convert audio file (here, .mp3 file) to a text file
+  - s3_filedownload.py : Program which accesses the S3 Bucket we specify to download a resource from it to Local Storage
+  - textsummarization.py : Program which uses TextRank Algorithm and NLTK (Natural Language ToolKit) Library of Python to rank the sentences in a paragraph and extract the essential sentences to summarize the paragraph
+  - upload_s3.py : Program to upload a resource from Local Storage to the S3 Bucket we specify
+ 
