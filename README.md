@@ -15,7 +15,7 @@ using the access key ID and the secret access key provided in the csv file **roo
 
 **DBS app folder contains the working code, the other files were used for training the comprehend models**
 
-'* **Running the program**
+* **Running the program**
  
  1. Without changing/modifying any files run the python file **driver.py**. For each audio file it takes approximately 10 minutes to finish running(includeing the time taken by the classifiers to run).
  
