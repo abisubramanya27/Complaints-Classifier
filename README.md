@@ -13,7 +13,9 @@ using the access key ID and the secret access key provided in the csv file **roo
   * The input audio file(which is the complaint) should be stored as "test-audio\<number\>.mp3" and they will be classified in the same order.
   * The relevant contact numbers of the customers along with their account numbers should be stored in the csv file in ./Database/Accno_Phno_db.csv (we have added some sample contact number + account number in it).
 
-* **Running the program**
+**DBS app folder contains the working code, the other files were used for training the comprehend models**
+
+'* **Running the program**
  
  1. Without changing/modifying any files run the python file **driver.py**. For each audio file it takes approximately 10 minutes to finish running(includeing the time taken by the classifiers to run).
  
