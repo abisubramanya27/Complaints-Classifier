@@ -10,7 +10,7 @@ using the access key ID and the secret access key provided in the csv file **roo
 
 * **Setting up the inputs:**
 
-  * The input audio file(which is the complaint) should be stored as "test-audio\<number\>.mp3" and they will be classified in the same order.
+  * The input audio file(which is the complaint) should be stored as "test-audio-\<number\>.mp3" in the test-audio folder and they will be classified in the same order.
   * The relevant contact numbers of the customers along with their account numbers should be stored in the csv file in ./Database/Accno_Phno_db.csv (we have added some sample contact number + account number in it).
 
 **DBS app folder contains the working code, the other files were used for training the comprehend models**
@@ -35,16 +35,17 @@ using the access key ID and the secret access key provided in the csv file **roo
 
 * The output will be written as a text file "Outputs.txt" in the same folder in the following format for each complaint in order:
   
-  SPAM (YES/NO) :
-  
-  TYPE OF COMPLAINT :
-  
-  SUMMARY OF COMPLAINT :
-  
-  Contact Number of the Complainant :
-  
-  Matching Account No(s) :
-  
-  ORIGINAL COMPLAINT :
+ SPAM (YES/NO) : NO
+
+ TYPE OF COMPLAINT/QUERY : 
+ 
+ OTHER ASSOCIATED COMPLAINT/QUERY TAGS : 
+
+ SUMMARY OF COMPLAINT/QUERY : 
+
+ Contact Number of the Customer :
+
+ Matching Account No(s) : 
+
 
 The folder dataset contains the dataset used for training the spam and complaint classifiers(each stored separately).
