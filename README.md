@@ -48,5 +48,10 @@ using the access key ID and the secret access key provided in the csv file **roo
  Matching Account No(s) : 
 
 **About the dataset**:
-We obtained the training data from here : https://www.kaggle.com/sebastienverpile/consumercomplaintsdata/version/1 . We cleaned the data and reduced the types of complaints to 12. We used just about 10% of this data to train the model and about 1% to test it
+We obtained the training data from here : https://www.kaggle.com/sebastienverpile/consumercomplaintsdata/version/1 . We cleaned the data and reduced the types of complaints to 12. We used just about 10% of this data to train the model and about 1% to test its performance.
+
 The folder dataset contains the dataset used for training the spam and complaint classifiers(each stored separately).
+
+For sample test data we have enclosed four audio files and details of few customers.
+
+
