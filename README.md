@@ -21,7 +21,7 @@ using the access key ID and the secret access key provided in the csv file **roo
  
  3. This is followed by a series of "Not Ready Yet" messages every 30 seconds till the output is received from AWS. The output is taken from the S3 bucket and is downloaded locally and stored as string variable(s).
  
- 4. This text is then passed to the summarization function which summarizes the text in √ N lines where N is the number of lines in the initial complaint. It uses the NLTK library to do text ranking.
+ 4. This text is then passed to the summarization function which summarizes the text in N/2 lines when N>5 where N is the number of lines in the initial complaint(after trying out different bounds on the number of lines like root(N), log(N) etc.) we felt the output for N/2 was better. It uses the NLTK library to do text ranking.
  
  5. The summarized text is then passed to the **Spam Classfier**(which classifies whether the complaint is a spam complaint or not) and the **Complaints Classifier** which classifies the complaint into a category among the 12 different categories we have used.
  
