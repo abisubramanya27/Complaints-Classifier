@@ -27,7 +27,7 @@ using the access key ID and the secret access key provided in the csv file **roo
  
  6. For both the classifier after they are called, a successful call to transcribe will print a json file(which will be printed in the terminal) and a series of "Not ready yet" messages follow until the output is obtained from AWS.
  
- 7. The output is written in a text file named outputs.txt created in the same directory as driver.py
+ 7. The output is written in a text file named **outputs.txt** created in the same directory as driver.py
  
  8. The program terminates with the message "Check outputs.txt".
 
