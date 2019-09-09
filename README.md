@@ -27,7 +27,7 @@ using the access key ID and the secret access key provided in the csv file **roo
  
  5. The summarized text is then passed to the **Spam Classfier**(which classifies whether the complaint is a spam complaint or not) and the **Complaints Classifier** which classifies the complaint into a category among the 12 different categories we have used.
  
- 6. For both the classifier after they are called, a successful call to transcribe will print a json file(which will be printed in the terminal) and a series of "Not ready yet" messages follow until the output is obtained from AWS.
+ 6. For both the classifiers, a successful call will print a json file and a series of "Not ready yet" messages follow until the output is obtained from AWS.
  
  7. The output is written in a text file named **Outputs.txt** created in the same directory as driver.py
  
