@@ -22,7 +22,7 @@ import time
 s3 = boto3.resource('s3')
 
 #Number of Test Data
-NoT = 1
+NoT = len(list(next(os.walk("./test-audio"))[2]))
 #Audio Files should be of the form "test-audio-<number>.mp3"
 
 #Speech to Text - Transcribe Part
@@ -61,7 +61,7 @@ def speech_part(bucket_name,filename,path) :
 
 bucket_name = "audio-complaint"
 file_name = "test-audio"        #The name of audio complaint file you wish to process
-path = './'
+path = './test-audio/'
 
 input_complaint_list = []
 for i in range(NoT) :
@@ -71,6 +71,8 @@ for i in range(NoT) :
 #----------------------------------------------------------------------------------------------------------
 
 #Summarization, Cleaning and Classifier Input Generation Part
+
+path = "./"
 
 clean_complaint_list = []
 summarized_complaint_list = []
@@ -191,7 +193,7 @@ for i in range(NoT) :
 		if(json_obj['Score'] > 0.01) :
 			if(count_labels >= 1) :
 				other_labels += ', '
-			other_labels += label['Name']
+			other_labels += json_obj['Name']
 			count_labels += 1
 		else :
 			break
