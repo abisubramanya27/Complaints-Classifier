@@ -10,7 +10,7 @@ using the access key ID and the secret access key provided in the csv file **roo
 
 * **Setting up the inputs:**
 
-  * The input audio file(which is the complaint) should be stored as "test-audio<number>.mp3" and they will be classified in the same order.
+  * The input audio file(which is the complaint) should be stored as "test-audio\<number\>.mp3" and they will be classified in the same order.
   * The relevant contact numbers of the customers along with their account numbers should be stored in the csv file in ./Database/Accno_Phno_db.csv (we have added some sample contact number + account number in it).
 
 * **Running the program**
