@@ -1,4 +1,7 @@
 # Complaints-Classifier by SOPHO_HACKERS
+
+Concept Theme : Digital Alter Ego 
+
 A complaints classifer for banks built using Python and Amazon Web Services(AWS)
 
 Instructions for use:
