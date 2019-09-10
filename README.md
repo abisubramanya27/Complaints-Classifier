@@ -17,7 +17,7 @@ using the access key ID and the secret access key provided in the csv file **roo
 
 '* **Running the program**
  
- 1. Without changing/modifying any files run the python file **driver.py**. For each audio file it takes approximately 10 minutes to finish running(includeing the time taken by the classifiers to run).
+ 1. Without changing/modifying any files run the python file **driver.py**. When we used a single audio file the program took 10 minutes to finish running and when we used 3 audio files it took approximately 20 minutes to complete.
  
  2. First the given audio is converted into text file using amazon transcribe. A successful call to transcribe will print a json file. Importantly the json file contains the job id and other information regarding the job.
  
