@@ -49,7 +49,7 @@ using the access key ID and the secret access key provided in the csv file **roo
 
 ```
 OTHER ASSOCIATED COMPLAINT/QUERY TAGS is meant to display categories that are good enough in describing the complaint/query,
-but don't have the maximum score of closeness to the text. Their inclusion will reduce the possibility of any significant errors in prediction
+but don't have the maximum score of closeness to the text. Their inclusion will reduce the possibility of any significant errors in prediction. It might sometimes be left empty when there is no other tag which has a good level of accuracy in describing the complaint/query.
 ```
 Brief Descriptions of the files and folders in the GitHub : 
 
