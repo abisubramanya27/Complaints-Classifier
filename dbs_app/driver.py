@@ -22,7 +22,7 @@ import time
 s3 = boto3.resource('s3')
 
 #Number of Test Data
-NoT = len(list(next(os.walk("./test-audio"))[2]))-1
+NoT = len([file for file in next(os.walk("./test-audio"))[2] if (file.find("test-audio-") != -1 and file.find(".mp3") != -1)])
 #Audio Files should be of the form "test-audio-<number>.mp3"
 
 #Speech to Text - Transcribe Part
