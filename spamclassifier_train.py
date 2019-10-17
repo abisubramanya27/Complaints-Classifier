@@ -12,7 +12,7 @@ create_response = client.create_document_classifier(
     InputDataConfig={
         'S3Uri': 's3://bankcomplaints/spam_train.csv'
     },
-    DataAccessRoleArn='arn:aws:iam::729128127076:role/pshift',
+    DataAccessRoleArn='arn:aws:iam::12345678:role/pshift',
     DocumentClassifierName='Spamclassifierv1',
     LanguageCode='en'
 )
