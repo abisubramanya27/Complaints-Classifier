@@ -12,7 +12,7 @@ create_response = client.create_document_classifier(
     InputDataConfig={
         'S3Uri': 's3://bankcomplaints/complaint_train.csv'
     },
-    DataAccessRoleArn='arn:aws:iam::729128127076:role/pshift',
+    DataAccessRoleArn='arn:aws:iam::1234567:role/',
     DocumentClassifierName='Complaintclassifierv1',
     LanguageCode='en'
 )
