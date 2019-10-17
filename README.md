@@ -9,12 +9,16 @@ Instructions for use:
 * Install and Set Up [AWS CLI](https://aws.amazon.com/cli/)
 * Configure it with:
 `aws configure`
-* Add your credentials in the relevant parts of the python scripts
+* Add your credentials in the relevant parts of the python scripts-
+  * In calling_comprehend: DataAccessRoleArn, DocumentClassifierArn
+  * Also in complaintclassifier_train. and spamclassifier_train fill the dataaccessrole arn.
 
 * **Setting up the inputs:**
 
   * The input audio file(which is the complaint) should be stored as "test-audio-\<number\>.mp3" in the test-audio folder which is inside the folder dbs_app("`.\Complaints-Classifier-application_v1\dbs_app\test-audio`") and they will be classified in the same order.
   * The relevant contact numbers of the customers along with their account numbers should be stored in the csv file in ./Database/Accno_Phno_db.csv (we have added some sample contact number + account number in it).
+  
+ * Run the complaintclassifier_train. and spamclassifier_train files once to create the classifiers.
 
 **DBS app folder contains the working code, the other files were used for training the comprehend models**
 
