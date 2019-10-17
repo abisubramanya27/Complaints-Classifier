@@ -24,7 +24,7 @@ def comprehend(S3_extension,training_model,output_path) :
         },
         DataAccessRoleArn='Insert DataAccessRoleArn',
         DocumentClassifierArn=
-        'arn:aws:comprehend:ap-southeast-1:123456789101112:document-classifier/'+training_model
+        'arn:aws:comprehend:region:123456789101112:document-classifier/'+training_model
     )
 
     print("Start response: %s\n", start_response)
