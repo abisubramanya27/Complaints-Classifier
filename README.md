@@ -9,7 +9,7 @@ Instructions for use:
 * Install and Set Up [AWS CLI](https://aws.amazon.com/cli/)
 * Configure it with:
 `aws configure`
-using the access key ID and the secret access key provided in the csv file **rootkeysubmission.csv**. The user ID we have provided have the permission to run Amazon Comprehend, Amazon Transcribe and as well as read/write in our S3 bucket.
+* Add your credentials in the relevant parts of the python scripts
 
 * **Setting up the inputs:**
 
