@@ -1,3 +1,7 @@
+# =====================================================================================================================================
+""" Summarizes Text By Picking the most important sentences using TextRank Algorithm  """
+# =====================================================================================================================================
+
 import re
 import nltk.tokenize as nt
 import numpy as np
@@ -9,6 +13,7 @@ from nltk.stem import WordNetLemmatizer
 from sklearn.metrics.pairwise import cosine_similarity
 nltk.download('stopwords')
 
+#Functions to calculate tf-idf values to generate vectors for words
 def tf(word,wordl):
     return wordl.count(word) / len(wordl)
 
@@ -23,6 +28,7 @@ def tfidf(word,wordl,sentl):
 
 def summarize(txt) :
 
+    #Breaking the text into list of sentences
     txt = txt.replace('\'',' ')
     txt = txt.replace('\"',' ')
 
@@ -30,8 +36,10 @@ def summarize(txt) :
 
     lemmatizer = WordNetLemmatizer()
 
+    #Place in sentl corresponding to sentence in clean_sentl
     place = list(range(len(sentl)))
 
+    #Cleaning up the sentences to only include meaningful words (and avoiding numerics and characters other than alphabets)
     clean_sentl = [re.sub('[^a-zA-Z]+',' ',a).lower() for a in sentl]
     clean_sentl = [' '.join(lemmatizer.lemmatize(w) for w in s.split() if (w is not None and w not in stopwords.words('english'))) for s in clean_sentl]
     tmp_l = []
@@ -43,9 +51,11 @@ def summarize(txt) :
 
     clean_sentl = tmp_l
 
+    #Generating unique list of all words present in all the sentences to run tf-idf on them
     wordslist = [w for s in clean_sentl for w in s.split()]
     wordslist = list(np.unique(np.array(wordslist)))
 
+    #Vectorizing sentences using tf-idf scores for each word in wordslist
     vector_sent = []
 
     for s in clean_sentl:
@@ -54,7 +64,8 @@ def summarize(txt) :
         for w in wordslist:
             score.append(tfidf(w,wordl,clean_sentl))
         vector_sent.append(score)
-
+    
+    #Obtaining similarity matrix from the vectors of words using cosine_similarity
     similarity_matrix = np.zeros((len(clean_sentl),len(clean_sentl)))
     for i in range(len(clean_sentl)):
         for j in range(len(clean_sentl)):
@@ -65,6 +76,7 @@ def summarize(txt) :
         else:
             similarity_matrix[i] /= similarity_matrix[i].sum()
 
+    #Text Rank Algorithm which executes iteratively till convergence (or for a specified maximum number of times, here 100)
     def TextRank(eps = 0.0001,max_it = 100,d = 0.85):
         p = np.ones(len(clean_sentl)) / len(clean_sentl)
         for i in range(max_it):
@@ -78,12 +90,22 @@ def summarize(txt) :
     textrank = TextRank()
     textrank = [(score,ind) for ind,score in enumerate(textrank)]
 
+    #Sorting the textrank list in descending order of scores so that we pick the most relevant sentences (top sqrt(N) out of N sentences)
     textrank = sorted(textrank,key = lambda x: x[0],reverse = True)
 
     output_str = ""
+    
+    #Number of Sentences to be Selected for Display
+    if(len(place) > 5) :
+        NoS = int(len(place)/2)
+    else :
+        NoS = len(place)
 
-    for i in range(int(math.sqrt(len(place)))) :
+    for i in range(NoS) :
         output_str += sentl[place[textrank[i][1]]]
         output_str += " ";
 
+    print("\n")
     return output_str
+
+# =========================================================================================================================================
