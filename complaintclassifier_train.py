@@ -2,7 +2,7 @@
 """ Creates Training Model for AWS Comprehend from Data in S3 Bucket  """
 # ==========================================================================================
 
-
+import boto3
 # Instantiate Boto3 SDK:
 client = boto3.client('comprehend','ap-southeast-1')
 
